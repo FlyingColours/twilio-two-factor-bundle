@@ -1,0 +1,28 @@
+{
+    "name": "flyingcolours/twilio-two-factor-bundle",
+    "description": "Use Twilio for 2FA (SMS or voice) with Symfony and scheb/two-factor-bundle",
+    "type": "library",
+    "require": {
+        "scheb/two-factor-bundle": "*",
+        "symfony/framework-bundle": "~2.3|~3",
+        "twilio/sdk": "*"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "^4.3",
+        "pdepend/pdepend": "^2.5",
+        "phploc/phploc": "^4.0",
+        "phpmd/phpmd": "^2.6",
+        "sebastian/phpcpd": "^4.0",
+        "leanphp/phpspec-code-coverage": "^4.2"
+    },
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "FlyingColours\\TwilioTwoFactorBundle\\": "src/"
+        }
+    },
+    "config": {
+        "bin-dir": "bin"
+    }
+}

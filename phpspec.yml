@@ -1,0 +1,15 @@
+suites:
+    default:
+        namespace: FlyingColours\TwilioTwoFactorBundle
+        psr4_prefix: FlyingColours\TwilioTwoFactorBundle
+
+extensions:
+  LeanPHP\PhpSpec\CodeCoverage\CodeCoverageExtension:
+    blacklist: [ 'spec', 'vendor' ]
+    format:
+      - clover
+      - html
+
+    output:
+      clover: build/logs/clover.xml
+      html: build/coverage
