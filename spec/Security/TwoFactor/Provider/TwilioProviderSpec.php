@@ -4,17 +4,19 @@ namespace spec\FlyingColours\TwilioTwoFactorBundle\Security\TwoFactor\Provider;
 
 use FlyingColours\TwilioTwoFactorBundle\Security\TwoFactor\Provider\TwilioProvider;
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 use Scheb\TwoFactorBundle\Security\TwoFactor\AuthenticationContextInterface;
 use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\TwoFactorFormRendererInterface;
 use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\TwoFactorProviderInterface;
 use FlyingColours\TwilioTwoFactorBundle\Model\Twilio;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class TwilioProviderSpec extends ObjectBehavior
 {
-    function let(SessionInterface $session, TwoFactorFormRendererInterface $renderer)
+    function let(EventDispatcherInterface $dispatcher, SessionInterface $session, TwoFactorFormRendererInterface $renderer)
     {
-        $this->beConstructedWith($session, $renderer);
+        $this->beConstructedWith($dispatcher, $session, $renderer);
     }
 
     function it_is_initializable()
@@ -23,7 +25,7 @@ class TwilioProviderSpec extends ObjectBehavior
         $this->shouldHaveType(TwoFactorProviderInterface::class);
     }
 
-    function it_can_trigger_2fa_with_Twilio(AuthenticationContextInterface $context, Twilio\TwoFactorInterface $user)
+    function it_can_trigger_2fa_with_Twilio(AuthenticationContextInterface $context, Twilio\TwoFactorInterface $user, EventDispatcherInterface $dispatcher)
     {
         $this->beginAuthentication($context)->shouldReturn(false);
 
@@ -33,6 +35,8 @@ class TwilioProviderSpec extends ObjectBehavior
         $this->beginAuthentication($context)->shouldReturn(false);
 
         $user->isTwilioAuthEnabled()->willReturn(true);
+
+        $dispatcher->dispatch(Argument::any(), Argument::any())->shouldBeCalled();
 
         $this->beginAuthentication($context)->shouldReturn(true);
     }

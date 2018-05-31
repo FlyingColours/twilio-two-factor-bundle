@@ -1,11 +1,21 @@
 services:
 
+    fc.twilio.client:
+        class: Twilio\Rest\Client
+        arguments: [ "%fc_twilio_two_factor.twilio.username%", "%fc_twilio_two_factor.twilio.password%"]
+
     fc.security.twilio.form_renderer:
         class: Scheb\TwoFactorBundle\Security\TwoFactor\Provider\DefaultTwoFactorFormRenderer
         arguments: [ "@twig", "%fc_twilio_two_factor.form_template%"]
 
     fc.twilio.two_factor.provider:
         class: FlyingColours\TwilioTwoFactorBundle\Security\TwoFactor\Provider\TwilioProvider
-        arguments: [ "@session", "@fc.security.twilio.form_renderer"]
+        arguments: [ "@event_dispatcher", "@session", "@fc.security.twilio.form_renderer"]
         tags:
             - { name: scheb_two_factor.provider, alias: twilio_two_factor }
+
+    fc.twilio_fa_start.subscriber:
+        class: FlyingColours\TwilioTwoFactorBundle\EventListener\TwoFaStartSubscriber
+        arguments: [ "@fc.twilio.client", "@session", "%fc_twilio_two_factor.config%"]
+        tags:
+            - { name: kernel.event_subscriber }
