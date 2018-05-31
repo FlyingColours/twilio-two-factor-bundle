@@ -3,8 +3,9 @@
     "description": "Use Twilio for 2FA (SMS or voice) with Symfony and scheb/two-factor-bundle",
     "type": "library",
     "require": {
+        "php": "^7.2",
         "scheb/two-factor-bundle": "*",
-        "symfony/framework-bundle": "~2.3|~3",
+        "symfony/framework-bundle": "~2.3||~3",
         "twilio/sdk": "*"
     },
     "require-dev": {
@@ -23,6 +24,9 @@
         }
     },
     "config": {
-        "bin-dir": "bin"
+        "bin-dir": "bin",
+        "platform": {
+            "php": "7.2"
+        }
     }
 }
