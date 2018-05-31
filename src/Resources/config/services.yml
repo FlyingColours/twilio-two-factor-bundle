@@ -1,0 +1,11 @@
+services:
+
+    fc.security.twilio.form_renderer:
+        class: Scheb\TwoFactorBundle\Security\TwoFactor\Provider\DefaultTwoFactorFormRenderer
+        arguments: [ "@twig", "%fc_twilio_two_factor.form_template%"]
+
+    fc.twilio.two_factor.provider:
+        class: FlyingColours\TwilioTwoFactorBundle\Security\TwoFactor\Provider\TwilioProvider
+        arguments: [ "@session", "@fc.security.twilio.form_renderer"]
+        tags:
+            - { name: scheb_two_factor.provider, alias: twilio_two_factor }
