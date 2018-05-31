@@ -45,7 +45,7 @@ class TwoFaStartSubscriber implements EventSubscriberInterface
 
         $code = '000000';
 
-        if($user->getTwilioPreferedMethod() == 'sms')
+        if($user->getTwilioPreferredMethod() == 'sms')
         {
             $this->client->messages->create(
                 $user->getTwilioPhoneNumber(), [

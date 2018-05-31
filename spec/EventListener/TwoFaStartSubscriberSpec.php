@@ -35,7 +35,7 @@ class TwoFaStartSubscriberSpec extends ObjectBehavior
     {
         $event->getSubject()->willReturn($user);
 
-        $user->getTwilioPreferedMethod()->willReturn('sms');
+        $user->getTwilioPreferredMethod()->willReturn('sms');
         $user->getTwilioPhoneNumber()->shouldBeCalled();
 
         $messageList->create(Argument::any(), Argument::any())->shouldBeCalled();
