@@ -6,6 +6,7 @@ Use Twilio for 2FA (SMS or voice) with Symfony and scheb/two-factor-bundle
 [![Build Status](https://travis-ci.org/FlyingColours/twilio-two-factor-bundle.svg?branch=develop)](https://travis-ci.org/FlyingColours/twilio-two-factor-bundle)
 [![Coverage Status](https://coveralls.io/repos/github/FlyingColours/twilio-two-factor-bundle/badge.svg?branch=develop)](https://coveralls.io/github/FlyingColours/twilio-two-factor-bundle?branch=develop)
 
+
 ## Installation
 
 Step 1: composer
@@ -108,6 +109,8 @@ Now your voice controller should be accessible at [http://you.project.url/voice-
 Step 4: Customise your voice message by overriding the twig template
 
 ```bash
+#!/bin/sh
+
 mkdir -p app/Resources/FlyingColoursTwilioTwoFactorBundle/views/voice && \
 cp ./vendor/flyingcolours/twilio-two-factor-bundle/src/Resources/views/voice/default.xml.twig \
 ./app/Resources/FlyingColoursTwilioTwoFactorBundle/views/voice/
