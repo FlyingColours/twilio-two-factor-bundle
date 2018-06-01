@@ -16,7 +16,7 @@ class TwoFaStartSubscriberSpec extends ObjectBehavior
 {
     function let(Client $client, SessionInterface $session, MessageList $messageList)
     {
-        $this->beConstructedWith($client, $session, $config = [ 'sms_from' => 'some phone number', 'sms_message' => '%s is your code']);
+        $this->beConstructedWith($client, $session, $config = [ 'sms_from' => 'some phone number', 'sms_message' => '%s is your code'], $host = "http://some.host");
         $client->messages = $messageList;
     }
 

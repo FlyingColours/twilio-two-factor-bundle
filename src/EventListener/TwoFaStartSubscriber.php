@@ -19,18 +19,23 @@ class TwoFaStartSubscriber implements EventSubscriberInterface
     /** @var array */
     private $config;
 
+    /** @var string */
+    private $host;
+
     /**
      * TwoFaStartSubscriber constructor.
      *
      * @param Client $client
      * @param SessionInterface $session
      * @param array $config
+     * @param string $host
      */
-    public function __construct(Client $client, SessionInterface $session, array $config)
+    public function __construct(Client $client, SessionInterface $session, array $config, string $host)
     {
         $this->client = $client;
         $this->session = $session;
         $this->config = $config;
+        $this->host = $host;
     }
 
     public static function getSubscribedEvents()
@@ -60,10 +65,15 @@ class TwoFaStartSubscriber implements EventSubscriberInterface
         }
         else
         {
+            if ( ! $this->config['voice_message_url'])
+            {
+                $this->config['voice_message_url'] = sprintf('%s/voice-ctrl?code={code}', $this->host);
+            }
+
             $this->client->account->calls->create(
                 $user->getTwilioPhoneNumber(),
                 $this->config['voice_from'],
-                [ 'url' => sprintf('%s%s', $this->config['voice_message_url'], $code) ]
+                [ 'url' => preg_replace('/{code}/', $code, $this->config['voice_message_url']) ]
             );
         }
     }

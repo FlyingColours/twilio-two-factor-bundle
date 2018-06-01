@@ -16,7 +16,8 @@
         "sebastian/phpcpd": "^4.0",
         "symfony/templating": "~2.3||~3",
         "leanphp/phpspec-code-coverage": "^4.2",
-        "php-coveralls/php-coveralls": "^2.1"
+        "php-coveralls/php-coveralls": "^2.1",
+        "symfony/expression-language": "^4.1"
     },
     "license": "MIT",
     "minimum-stability": "stable",

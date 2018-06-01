@@ -77,12 +77,12 @@ Step 1: configure bundle in config.yml
 flying_colours_twilio_two_factor:
     form_template: '@SchebTwoFactor/Authentication/form.html.twig'
     twilio:
-        username: ~ # aka SID
-        password: ~ # aka token
+        username: ~ # [required] aka SID
+        password: ~ # [required] aka token
     config:
-        sms_from: ~ # this shows on the SMS sender field (it does not have to be a phone number)
-        voice_from: ~ # this has to be phone number
-        voice_message_url: ~ # voice controller URL, must be accessible from web
+        sms_from: ~ # [required] this shows on the SMS sender field (it does not have to be a phone number)
+        voice_from: ~ # [required] this has to be phone number
+        voice_message_url: ~ # voice controller URL, must be accessible from web. Leave empty for default, otherwise add "{code}" for code
 ```
 
 Step 2: add routing to provide URL for voice controller
@@ -109,9 +109,21 @@ Now your voice controller should be accessible at [http://you.project.url/voice-
 Step 4: Customise your voice message by overriding the twig template
 
 ```bash
-#!/bin/sh
-
 mkdir -p app/Resources/FlyingColoursTwilioTwoFactorBundle/views/voice && \
 cp ./vendor/flyingcolours/twilio-two-factor-bundle/src/Resources/views/voice/default.xml.twig \
 ./app/Resources/FlyingColoursTwilioTwoFactorBundle/views/voice/
+```
+
+## Development notes
+
+When you develop your app locally (i.e. using Vagrant), it's very likely that your local instance 
+is not publicly available. In order to use voice authentication, you can use one of the Twilio twimlets,
+called "echo" like this:
+
+```yaml
+# app/config/config_dev.yml
+
+flying_colours_twilio_two_factor:
+    config:
+        voice_message_url: "http://twimlets.com/echo?Twiml=%%3CResponse%%3E%%3CSay%%3EYour+code+is+{code}%%3C%%2FSay%%3E%%3C%%2FResponse%%3E"
 ```
