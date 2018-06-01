@@ -60,7 +60,13 @@ class TwilioProvider implements TwoFactorProviderInterface
             return false;
         }
 
-        return hash_equals($this->session->get('twilio_code'), $authenticationCode);
+        if(hash_equals($this->session->get('twilio_code'), $authenticationCode))
+        {
+            $this->session->remove('twilio_code');
+            return true;
+        }
+
+        return false;
     }
 
     public function getFormRenderer(): TwoFactorFormRendererInterface

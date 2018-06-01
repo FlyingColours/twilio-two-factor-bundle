@@ -1,3 +1,11 @@
+parameters:
+
+    fc.twilio.config:
+        sms_from: "%flying_colours_twilio_two_factor.config.sms_from%"
+        sms_message: "%flying_colours_twilio_two_factor.config.sms_message%"
+        voice_from: "%flying_colours_twilio_two_factor.config.voice_from%"
+        voice_message_url: "%flying_colours_twilio_two_factor.config.voice_message_url%"
+
 services:
 
     fc.twilio.client:
@@ -16,6 +24,10 @@ services:
 
     fc.twilio_fa_start.subscriber:
         class: FlyingColours\TwilioTwoFactorBundle\EventListener\TwoFaStartSubscriber
-        arguments: [ "@fc.twilio.client", "@session", { sms_from: "%flying_colours_twilio_two_factor.config.sms_from%", sms_message: "%flying_colours_twilio_two_factor.config.sms_message%" }]
+        arguments: [ "@fc.twilio.client", "@session", "%fc.twilio.config%"]
         tags:
             - { name: kernel.event_subscriber }
+
+    fc.controller.voice:
+        class: FlyingColours\TwilioTwoFactorBundle\Controller\VoiceController
+        arguments: [ "@templating" ]

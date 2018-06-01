@@ -27,6 +27,8 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('sms_from')->defaultNull()->end()
                         ->scalarNode('sms_message')->defaultValue('%s is your code')->end()
+                        ->scalarNode('voice_from')->defaultNull()->end()
+                        ->scalarNode('voice_message_url')->defaultNull()->end()
                     ->end()
                 ->end()
             ->end()

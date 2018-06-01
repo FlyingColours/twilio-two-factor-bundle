@@ -50,6 +50,8 @@ class TwilioProviderSpec extends ObjectBehavior
         $session->get('twilio_code')->willReturn('654321');
 
         $this->validateAuthenticationCode($user, $code = '123456')->shouldReturn(false);
+
+        $session->remove('twilio_code')->shouldBeCalled();
         $this->validateAuthenticationCode($user, $code = '654321')->shouldReturn(true);
     }
 

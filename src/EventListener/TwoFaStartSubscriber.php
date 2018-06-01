@@ -43,7 +43,11 @@ class TwoFaStartSubscriber implements EventSubscriberInterface
         /** @var Twilio\TwoFactorInterface $user */
         $user = $event->getSubject();
 
-        $code = '000000';
+        $min = pow(10, 6 - 1);
+        $max = pow(10, 6) - 1;
+        $code = random_int($min, $max);
+
+        $this->session->set('twilio_code', (string) $code);
 
         if($user->getTwilioPreferredMethod() == 'sms')
         {
@@ -56,7 +60,11 @@ class TwoFaStartSubscriber implements EventSubscriberInterface
         }
         else
         {
-            // @todo voicemail trigger (@jernej)
+            $this->client->account->calls->create(
+                $user->getTwilioPhoneNumber(),
+                $this->config['voice_from'],
+                [ 'url' => sprintf('%s%s', $this->config['voice_message_url'], $code) ]
+            );
         }
     }
 }
