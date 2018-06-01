@@ -2,11 +2,11 @@ services:
 
     fc.twilio.client:
         class: Twilio\Rest\Client
-        arguments: [ "%fc_twilio_two_factor.twilio.username%", "%fc_twilio_two_factor.twilio.password%"]
+        arguments: [ "%flying_colours_twilio_two_factor.twilio.username%", "%flying_colours_twilio_two_factor.twilio.password%"]
 
     fc.security.twilio.form_renderer:
         class: Scheb\TwoFactorBundle\Security\TwoFactor\Provider\DefaultTwoFactorFormRenderer
-        arguments: [ "@twig", "%fc_twilio_two_factor.form_template%"]
+        arguments: [ "@twig", "%flying_colours_twilio_two_factor.form_template%"]
 
     fc.twilio.two_factor.provider:
         class: FlyingColours\TwilioTwoFactorBundle\Security\TwoFactor\Provider\TwilioProvider
@@ -16,6 +16,6 @@ services:
 
     fc.twilio_fa_start.subscriber:
         class: FlyingColours\TwilioTwoFactorBundle\EventListener\TwoFaStartSubscriber
-        arguments: [ "@fc.twilio.client", "@session", "%fc_twilio_two_factor.config%"]
+        arguments: [ "@fc.twilio.client", "@session", { sms_from: "%flying_colours_twilio_two_factor.config.sms_from%", sms_message: "%flying_colours_twilio_two_factor.config.sms_message%" }]
         tags:
             - { name: kernel.event_subscriber }
