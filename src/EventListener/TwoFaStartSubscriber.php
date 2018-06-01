@@ -59,7 +59,7 @@ class TwoFaStartSubscriber implements EventSubscriberInterface
             $this->client->messages->create(
                 $user->getTwilioPhoneNumber(), [
                     'from' => $this->config['sms_from'],
-                    'body' => sprintf($this->config['sms_message'], $code)
+                    'body' => preg_replace('/{code}/', $code, $this->config['sms_message'])
                 ]
             );
         }

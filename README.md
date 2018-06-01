@@ -81,6 +81,7 @@ flying_colours_twilio_two_factor:
         password: ~ # [required] aka token
     config:
         sms_from: ~ # [required] this shows on the SMS sender field (it does not have to be a phone number)
+        sms_message: "{code} is your code"
         voice_from: ~ # [required] this has to be phone number
         voice_message_url: ~ # voice controller URL, must be accessible from web. Leave empty for default, otherwise add "{code}" for code
 ```
