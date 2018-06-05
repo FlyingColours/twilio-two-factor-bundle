@@ -5,6 +5,7 @@ namespace FlyingColours\TwilioTwoFactorBundle\EventListener;
 use FlyingColours\TwilioTwoFactorBundle\Model\Twilio;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Twilio\Rest\Client;
 
@@ -28,14 +29,15 @@ class TwoFaStartSubscriber implements EventSubscriberInterface
      * @param Client $client
      * @param SessionInterface $session
      * @param array $config
-     * @param string $host
+     * @param Request $request
      */
-    public function __construct(Client $client, SessionInterface $session, array $config, string $host)
+    public function __construct(Client $client, SessionInterface $session, array $config, ?Request $request = null)
     {
         $this->client = $client;
         $this->session = $session;
         $this->config = $config;
-        $this->host = $host;
+
+        if($request) $this->host = $request->getHost();
     }
 
     public static function getSubscribedEvents()
@@ -65,7 +67,7 @@ class TwoFaStartSubscriber implements EventSubscriberInterface
         }
         else
         {
-            if ( ! $this->config['voice_message_url'])
+            if ( ! $this->config['voice_message_url'] && $this->host)
             {
                 $this->config['voice_message_url'] = sprintf('%s/voice-ctrl?code={code}', $this->host);
             }

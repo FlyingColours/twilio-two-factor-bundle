@@ -24,7 +24,7 @@ services:
 
     fc.twilio_fa_start.subscriber:
         class: FlyingColours\TwilioTwoFactorBundle\EventListener\TwoFaStartSubscriber
-        arguments: [ "@fc.twilio.client", "@session", "%fc.twilio.config%", "@=service('request_stack').getCurrentRequest().getBaseUrl()" ]
+        arguments: [ "@fc.twilio.client", "@session", "%fc.twilio.config%", "@=service('request_stack').getCurrentRequest()" ]
         tags:
             - { name: kernel.event_subscriber }
 

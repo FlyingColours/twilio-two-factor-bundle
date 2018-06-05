@@ -7,6 +7,7 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Twilio\Rest\Api\V2010\Account\MessageList;
 use Twilio\Rest\Client;
@@ -14,10 +15,11 @@ use FlyingColours\TwilioTwoFactorBundle\Model\Twilio;
 
 class TwoFaStartSubscriberSpec extends ObjectBehavior
 {
-    function let(Client $client, SessionInterface $session, MessageList $messageList)
+    function let(Client $client, SessionInterface $session, MessageList $messageList, Request $request)
     {
-        $this->beConstructedWith($client, $session, $config = [ 'sms_from' => 'some phone number', 'sms_message' => '%s is your code'], $host = "http://some.host");
+        $this->beConstructedWith($client, $session, $config = [ 'sms_from' => 'some phone number', 'sms_message' => '%s is your code'], $request);
         $client->messages = $messageList;
+        $request->getHost()->willReturn('http://some.host');
     }
 
     function it_is_initializable()
