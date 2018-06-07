@@ -3,6 +3,10 @@ language: php
 php:
     - 7.2
 
+env:
+    global:
+        - COMPOSER_MEMORY_LIMIT=-1
+
 before_script:
     - curl -s http://getcomposer.org/installer | php
     - php composer.phar update --prefer-dist --ignore-platform-reqs
