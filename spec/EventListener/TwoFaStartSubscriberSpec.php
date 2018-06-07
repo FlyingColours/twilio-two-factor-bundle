@@ -9,16 +9,26 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Twilio\Rest\Api\V2010\Account\CallList;
 use Twilio\Rest\Api\V2010\Account\MessageList;
 use Twilio\Rest\Client;
 use FlyingColours\TwilioTwoFactorBundle\Model\Twilio;
 
 class TwoFaStartSubscriberSpec extends ObjectBehavior
 {
-    function let(Client $client, SessionInterface $session, MessageList $messageList, Request $request)
+    function let(Client $client, SessionInterface $session, MessageList $messageList, CallList $calls, Request $request)
     {
-        $this->beConstructedWith($client, $session, $config = [ 'sms_from' => 'some phone number', 'sms_message' => '%s is your code'], $request);
+        $this->beConstructedWith($client, $session, $config = [
+            'sms_from' => 'some phone number',
+            'sms_message' => '%s is your code',
+            'voice_message_url' => null,
+            'voice_from' => 'some phone number'
+        ], $request);
+
         $client->messages = $messageList;
+        $client->account = new \stdClass();
+        $client->account->calls = $calls;
+
         $request->getHost()->willReturn('http://some.host');
     }
 
@@ -42,6 +52,10 @@ class TwoFaStartSubscriberSpec extends ObjectBehavior
 
         $messageList->create(Argument::any(), Argument::any())->shouldBeCalled();
 
-        $this->onTwoFaTwilioStart($event);
+        $this->onTwilioAuthTriggered($event);
+
+        $user->getTwilioPreferredMethod()->willReturn('voice');
+
+        $this->onTwilioAuthTriggered($event);
     }
 }

@@ -6,6 +6,9 @@ parameters:
         voice_from: "%flying_colours_twilio_two_factor.config.voice_from%"
         voice_message_url: "%flying_colours_twilio_two_factor.config.voice_message_url%"
 
+    fc.form.trigger.type.class: FlyingColours\TwilioTwoFactorBundle\Form\TriggerFormType
+
+
 services:
 
     fc.twilio.client:
@@ -31,3 +34,17 @@ services:
     fc.controller.voice:
         class: FlyingColours\TwilioTwoFactorBundle\Controller\VoiceController
         arguments: [ "@templating" ]
+
+    fc.controller.trigger:
+        class: FlyingColours\TwilioTwoFactorBundle\Controller\TriggerController
+        arguments: [ "@router", "@event_dispatcher", "@templating", "@fc.form.trigger", "@=service('security.token_storage').getToken()" ]
+
+    fc.form.trigger.type:
+        class: "%fc.form.trigger.type.class%"
+        tags:
+            - { name: "form.type" }
+
+    fc.form.trigger:
+        class: Symfony\Component\Form\FormInterface
+        factory: [ "@form.factory", create ]
+        arguments: [ "%fc.form.trigger.type.class%" ]

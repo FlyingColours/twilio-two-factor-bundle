@@ -5,6 +5,7 @@
     "require": {
         "php": "^7.2",
         "scheb/two-factor-bundle": "*",
+        "symfony/form": "~2.3||~3",
         "symfony/framework-bundle": "~2.3||~3",
         "twilio/sdk": "^5"
     },
@@ -17,7 +18,7 @@
         "symfony/templating": "~2.3||~3",
         "leanphp/phpspec-code-coverage": "^4.2",
         "php-coveralls/php-coveralls": "^2.1",
-        "symfony/expression-language": "^4.1"
+        "symfony/expression-language": "~2.3||~3"
     },
     "license": "MIT",
     "minimum-stability": "stable",

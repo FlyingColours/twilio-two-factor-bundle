@@ -42,10 +42,10 @@ class TwoFaStartSubscriber implements EventSubscriberInterface
 
     public static function getSubscribedEvents()
     {
-        return [ '2fa.twilio.start' => 'onTwoFaTwilioStart' ];
+        return [ 'twilio.auth.triggered' => 'onTwilioAuthTriggered' ];
     }
 
-    public function onTwoFaTwilioStart(GenericEvent $event)
+    public function onTwilioAuthTriggered(GenericEvent $event)
     {
         /** @var Twilio\TwoFactorInterface $user */
         $user = $event->getSubject();
