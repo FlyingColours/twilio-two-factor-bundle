@@ -28,7 +28,6 @@ class TriggerFormType extends AbstractType
                 'label' => 'Preferred contact method',
                 'choices' => array_combine($methods, $methods)
             ])
-            ->add('send', SubmitType::class)
         ;
     }
 }

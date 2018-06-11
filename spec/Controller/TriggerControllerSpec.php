@@ -9,6 +9,7 @@ use Prophecy\Argument;
 use Scheb\TwoFactorBundle\Security\Authentication\Token\TwoFactorToken;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
@@ -38,7 +39,8 @@ class TriggerControllerSpec extends ObjectBehavior
         TwoFactorToken $token,
         TwoFactorInterface $user,
         EventDispatcherInterface $dispatcher,
-        RouterInterface $router
+        RouterInterface $router,
+        GenericEvent $event
     )
     {
         $token->getUser()->willReturn($user);
@@ -55,9 +57,16 @@ class TriggerControllerSpec extends ObjectBehavior
         $form->isValid()->willReturn(true);
         $form->getData()->willReturn($user);
 
-        $dispatcher->dispatch(Argument::any(), Argument::any())->shouldBeCalled();
+        $dispatcher->dispatch(Argument::any(), Argument::any())->willReturn($event);
+
+        $event->hasArgument('route')->willReturn(false);
 
         $router->generate(Argument::any())->willReturn('/some/url');
+
+        $this->defaultAction($request)->shouldNotReturn(null);
+
+        $event->hasArgument('route')->willReturn(true);
+        $event->getArgument('route')->willReturn('something');
 
         $this->defaultAction($request)->shouldNotReturn(null);
     }

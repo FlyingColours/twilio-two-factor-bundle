@@ -10,6 +10,7 @@ use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Routing\RouterInterface;
 
 class TriggerController
@@ -63,9 +64,15 @@ class TriggerController
         {
             /** @var TwoFactorInterface $user */
             $user = $this->form->getData();
-            $this->dispatcher->dispatch('twilio.auth.triggered', new GenericEvent($user));
 
-            return new RedirectResponse($this->router->generate('2fa_login'));
+            $event = $this->dispatcher->dispatch('twilio.auth.triggered', new GenericEvent($user));
+
+            $route = $event->hasArgument('route')
+                ? $event->getArgument('route')
+                : '2fa_login'
+            ;
+
+            return new RedirectResponse($this->router->generate($route));
         }
 
         return $this->templating->renderResponse(
