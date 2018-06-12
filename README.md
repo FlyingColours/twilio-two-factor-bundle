@@ -6,6 +6,7 @@ Use Twilio for 2FA (SMS or voice) with Symfony and scheb/two-factor-bundle
 [![Build Status](https://travis-ci.org/FlyingColours/twilio-two-factor-bundle.svg?branch=develop)](https://travis-ci.org/FlyingColours/twilio-two-factor-bundle)
 [![Coverage Status](https://coveralls.io/repos/github/FlyingColours/twilio-two-factor-bundle/badge.svg?branch=develop)](https://coveralls.io/github/FlyingColours/twilio-two-factor-bundle?branch=develop)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/FlyingColours/twilio-two-factor-bundle/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/FlyingColours/twilio-two-factor-bundle/?branch=develop)
+[![License](https://poser.pugx.org/FlyingColours/twilio-two-factor-bundle/license.svg)](https://packagist.org/packages/FlyingColours/twilio-two-factor-bundle)
 
 
 ## Installation
