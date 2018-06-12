@@ -1,6 +1,6 @@
 # Twilio backend (SMS and voice message)
 
-Use Twilio for 2FA (SMS or voice) with Symfony and scheb/two-factor-bundle
+Use Twilio for 2FA (SMS or voice) with Symfony and [scheb/two-factor-bundle](https://github.com/scheb/two-factor-bundle)
 
 [![Version](https://img.shields.io/packagist/v/FlyingColours/twilio-two-factor-bundle.svg?style=flat-square)](https://packagist.org/packages/FlyingColours/twilio-two-factor-bundle)
 [![Build Status](https://travis-ci.org/FlyingColours/twilio-two-factor-bundle.svg?branch=develop)](https://travis-ci.org/FlyingColours/twilio-two-factor-bundle)
