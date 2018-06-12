@@ -65,6 +65,7 @@ class TriggerController
             /** @var TwoFactorInterface $user */
             $user = $this->form->getData();
 
+            /** @var GenericEvent $event */
             $event = $this->dispatcher->dispatch('twilio.auth.triggered', new GenericEvent($user));
 
             $route = $event->hasArgument('route')
