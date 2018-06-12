@@ -12,4 +12,4 @@ build:
             COMPOSER_MEMORY_LIMIT: -1
     dependencies:
         before:
-            - sudo apt-get install -y php-xdebug
+            - pecl install xdebug
