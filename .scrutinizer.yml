@@ -5,3 +5,8 @@ checks:
 filter:
     excluded_paths:
         - spec/*
+
+build:
+    environment:
+        variables:
+            COMPOSER_MEMORY_LIMIT: -1
