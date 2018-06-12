@@ -10,3 +10,6 @@ build:
     environment:
         variables:
             COMPOSER_MEMORY_LIMIT: -1
+    dependencies:
+        before:
+            - sudo apt-get install -y php-xdebug
