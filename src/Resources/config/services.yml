@@ -1,0 +1,50 @@
+parameters:
+
+    fc.twilio.config:
+        sms_from: "%flying_colours_twilio_two_factor.config.sms_from%"
+        sms_message: "%flying_colours_twilio_two_factor.config.sms_message%"
+        voice_from: "%flying_colours_twilio_two_factor.config.voice_from%"
+        voice_message_url: "%flying_colours_twilio_two_factor.config.voice_message_url%"
+
+    fc.form.trigger.type.class: FlyingColours\TwilioTwoFactorBundle\Form\TriggerFormType
+
+
+services:
+
+    fc.twilio.client:
+        class: Twilio\Rest\Client
+        arguments: [ "%flying_colours_twilio_two_factor.twilio.username%", "%flying_colours_twilio_two_factor.twilio.password%"]
+
+    fc.security.twilio.form_renderer:
+        class: Scheb\TwoFactorBundle\Security\TwoFactor\Provider\DefaultTwoFactorFormRenderer
+        arguments: [ "@twig", "%flying_colours_twilio_two_factor.form_template%"]
+
+    fc.twilio.two_factor.provider:
+        class: FlyingColours\TwilioTwoFactorBundle\Security\TwoFactor\Provider\TwilioProvider
+        arguments: [ "@event_dispatcher", "@session", "@fc.security.twilio.form_renderer"]
+        tags:
+            - { name: scheb_two_factor.provider, alias: twilio_two_factor }
+
+    fc.twilio_fa_start.subscriber:
+        class: FlyingColours\TwilioTwoFactorBundle\EventListener\TwoFaStartSubscriber
+        arguments: [ "@fc.twilio.client", "@session", "%fc.twilio.config%", "@=service('request_stack').getCurrentRequest()" ]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    fc.controller.voice:
+        class: FlyingColours\TwilioTwoFactorBundle\Controller\VoiceController
+        arguments: [ "@templating" ]
+
+    fc.controller.trigger:
+        class: FlyingColours\TwilioTwoFactorBundle\Controller\TriggerController
+        arguments: [ "@router", "@event_dispatcher", "@templating", "@fc.form.trigger", "@=service('security.token_storage').getToken()" ]
+
+    fc.form.trigger.type:
+        class: "%fc.form.trigger.type.class%"
+        tags:
+            - { name: "form.type" }
+
+    fc.form.trigger:
+        class: Symfony\Component\Form\FormInterface
+        factory: [ "@form.factory", create ]
+        arguments: [ "%fc.form.trigger.type.class%" ]

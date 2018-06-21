@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+
+    <Pause/>
+
+    {% if not app.request.query.get('Digits') matches '/^\\d+$/' or app.request.query.get('Digits') != '1' %}
+    <Say voice="woman" language="en-gb">Hello.</Say>
+    <Say voice="woman" language="en-gb">You have recently requested an authentication code on our site...</Say>
+    <Pause/>
+    {% endif %}
+
+    {% if not app.request.query.get('Digits') matches '/^\\d+$/' or app.request.query.get('Digits') == '1' %}
+        <Say voice="woman">Your code is...</Say>
+        {% for digit in app.request.query.get('code')|split('') %}
+            <Say voice="woman" language="en-gb">{{ digit }}</Say>
+        {% endfor %}
+        <Pause/>
+    {% endif %}
+
+    {% if not app.request.query.get('Digits') matches '/^\\d+$/' %}
+        <Gather input="dtmf" timeout="5" numDigits="1" method="GET">
+            <Say voice="woman" language="en-gb">Please press 1 to repeat your code.</Say>
+        </Gather>
+    {% endif %}
+
+    <Say voice="woman" language="en-gb">Thank you.</Say>
+
+    <Hangup/>
+
+</Response>

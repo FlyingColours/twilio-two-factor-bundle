@@ -1,0 +1,3 @@
+voice_ctrl:
+    path: /voice-ctrl
+    defaults: { _controller: fc.controller.voice:defaultAction, _format: xml }
