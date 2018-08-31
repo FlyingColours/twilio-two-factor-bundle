@@ -69,7 +69,7 @@ class TwoFaStartSubscriber implements EventSubscriberInterface
         {
             if ( ! $this->config['voice_message_url'] && $this->host)
             {
-                $this->config['voice_message_url'] = sprintf('%s/voice-ctrl?code={code}', $this->host);
+                $this->config['voice_message_url'] = sprintf('http://%s/voice-ctrl?code={code}', $this->host);
             }
 
             $this->client->account->calls->create(
