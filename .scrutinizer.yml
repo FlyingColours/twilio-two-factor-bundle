@@ -13,7 +13,7 @@ build:
     dependencies:
         before:
             - pecl install xdebug
-            - echo "zend_extension=xdebug.so" > /home/scrutinizer/.phpenv/versions/7.2.0/etc/conf.d/xdebug.ini
+            - echo "zend_extension=xdebug.so" > /home/scrutinizer/.phpenv/versions/7.3.0/etc/conf.d/xdebug.ini
 
     tests:
         override:

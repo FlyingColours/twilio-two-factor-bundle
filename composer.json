@@ -5,20 +5,20 @@
     "require": {
         "php": "^7.2",
         "scheb/two-factor-bundle": "*",
-        "symfony/form": "~2.3||~3",
-        "symfony/framework-bundle": "~2.3||~3",
+        "symfony/form": "~2.3||~3||~4",
+        "symfony/framework-bundle": "~2.3||~3||~4",
         "twilio/sdk": "^5"
     },
     "require-dev": {
-        "phpspec/phpspec": "^4.3",
+        "phpspec/phpspec": "^5",
         "pdepend/pdepend": "^2.5",
         "phploc/phploc": "^4.0",
         "phpmd/phpmd": "^2.6",
         "sebastian/phpcpd": "^4.0",
-        "symfony/templating": "~2.3||~3",
-        "leanphp/phpspec-code-coverage": "^4.2",
+        "symfony/templating": "~2.3||~3||~4",
+        "dragonrun1/phpspec-code-coverage": "^4.2",
         "php-coveralls/php-coveralls": "^2.1",
-        "symfony/expression-language": "~2.3||~3"
+        "symfony/expression-language": "~2.3||~3||~4"
     },
     "license": "MIT",
     "minimum-stability": "stable",
@@ -30,7 +30,7 @@
     "config": {
         "bin-dir": "bin",
         "platform": {
-            "php": "7.2"
+            "php": "7.3"
         }
     }
 }

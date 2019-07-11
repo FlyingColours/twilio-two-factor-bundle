@@ -38,6 +38,7 @@ class TwilioProviderSpec extends ObjectBehavior
 
         $dispatcher->dispatch(Argument::any(), Argument::any())->shouldBeCalled();
 
+        $this->prepareAuthentication($user);
         $this->beginAuthentication($context)->shouldReturn(true);
     }
 
