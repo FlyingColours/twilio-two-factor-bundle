@@ -42,15 +42,15 @@ class TwilioProvider implements TwoFactorProviderInterface
     public function beginAuthentication(AuthenticationContextInterface $context): bool
     {
         $user = $context->getUser();
+        return $user instanceof Twilio\TwoFactorInterface && $user->isTwilioAuthEnabled();
+    }
 
+    public function prepareAuthentication($user): void
+    {
         if ($user instanceof Twilio\TwoFactorInterface && $user->isTwilioAuthEnabled())
         {
-            $this->dispatcher->dispatch('2fa.twilio.start', new GenericEvent($user));
-
-            return true;
+            $this->dispatcher->dispatch(new GenericEvent($user), '2fa.twilio.start');
         }
-
-        return false;
     }
 
     public function validateAuthenticationCode($user, string $authenticationCode): bool

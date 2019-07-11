@@ -21,6 +21,7 @@ class FlyingColoursTwilioTwoFactorExtensionSpec extends ObjectBehavior
         $container->fileExists(Argument::any())->willReturn(true);
         $container->setDefinition(Argument::any(), Argument::any())->shouldBeCalled();
         $container->setParameter(Argument::any(), Argument::any())->shouldBeCalled();
+        $container->removeBindings(Argument::any())->shouldBeCalled();
 
         $this->load([], $container);
     }
