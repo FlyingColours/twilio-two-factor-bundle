@@ -130,4 +130,3 @@ flying_colours_twilio_two_factor:
     config:
         voice_message_url: "http://twimlets.com/echo?Twiml=%%3CResponse%%3E%%3CSay%%3EYour+code+is+{code}%%3C%%2FSay%%3E%%3C%%2FResponse%%3E"
 ```
-
