@@ -7,6 +7,7 @@ use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\TwoFactorFormRendererInter
 use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\TwoFactorProviderInterface;
 use FlyingColours\TwilioTwoFactorBundle\Model\Twilio;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface as ContractsEventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -49,7 +50,14 @@ class TwilioProvider implements TwoFactorProviderInterface
     {
         if ($user instanceof Twilio\TwoFactorInterface && $user->isTwilioAuthEnabled())
         {
-            $this->dispatcher->dispatch(new GenericEvent($user), '2fa.twilio.start');
+            if( $this->dispatcher instanceof ContractsEventDispatcherInterface)
+            {
+                $this->dispatcher->dispatch(new GenericEvent($user), '2fa.twilio.start');
+            }
+            else
+            {
+                $this->dispatcher->dispatch('2fa.twilio.start', new GenericEvent($user));
+            }
         }
     }
 
